@@ -1,6 +1,6 @@
 <?php
 
-print("START");
-print("END");
+phpinfo();
+xdebug_info();
 
 ?>

@@ -1,19 +1,24 @@
-
 #!/bin/bash
 
 CONFIG_DIRECTORY=$1
 
 if [ -z $CONFIG_DIRECTORY ]; then
     echo "😵 Config directory must be specified as parameter. It cannot be empty."
-    echo "😵 Usage: configure-xdebug <config_directory>"    
+    echo "😵 Usage: configure-php <config_directory>"    
     exit 1
+fi
+
+if [ ! -d "$CONFIG_DIRECTORY" ]; then
+    echo -e "ℹ️  Directory : $CONFIG_DIRECTORY will be created\n"
+    mkdir $CONFIG_DIRECTORY
+    NOTHING=0
 fi
 
 ## PREPARE FILE PHP.INI
 
 cd $CONFIG_DIRECTORY
 
-FILE_PHP_INI="$CONFIG_DIRECTORY/php.ini-development"
+FILE_PHP_INI="$CONFIG_DIRECTORY/php.ini"
 FILE_PHP_INI_ORIGINAL="/usr/local/etc/php/php.ini-development"
 
 if [ -f "$FILE_PHP_INI_ORIGINAL" ] && [ ! -h "$FILE_PHP_INI_ORIGINAL" ]; then
@@ -44,7 +49,10 @@ else
 
     cat << EOF >> $FILE_PHP_INI
 zend_extension=xdebug
+error_log=/workspaces/app/logs/php-errors.log
 EOF
+
+    echo -e "\n; File modified automatically at : $(date)" >> $FILE_PHP_INI
 
 fi
 
@@ -61,5 +69,7 @@ fi
 
 echo "ℹ️  Symbolic link is now created between $FILE_PHP_INI and $FILE_PHP_INI_FINAL"
 sudo ln -s $FILE_PHP_INI $FILE_PHP_INI_FINAL
+
+touch /workspaces/app/logs/php-errors.log
 
 echo -e "\n🎉 PHP configuration is finished !"

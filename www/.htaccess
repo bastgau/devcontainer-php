@@ -1,0 +1,10 @@
+Options -Indexes
+Options -MultiViews
+
+RewriteEngine on
+
+# RewriteRule ^home.php$ /index.php [L]
+
+# ErrorDocument 401 /401.php
+# ErrorDocument 403 /403.php
+# ErrorDocument 404 /404.php

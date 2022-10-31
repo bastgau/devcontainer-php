@@ -5,7 +5,24 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch Built-in server with debug",
+            "name": "Launch website in debug mode (Apache server)",
+            "type": "php",
+            "request": "launch",
+            "runtimeArgs": [
+                "-S",
+                "localhost:9003"
+            ],
+            "program": "",
+            "cwd": "${workspaceRoot}/www",
+            "port": 9000,
+            "serverReadyAction": {
+                "pattern": "Development Server \\(http://(localhost):[0-9]+\\) started",
+                "uriFormat": "http://%s:8080",
+                "action": "openExternally"
+            }
+        },
+        {
+            "name": "Launch website in debug mode (Built-in server)",
             "type": "php",
             "request": "launch",
             "runtimeArgs": [
@@ -18,23 +35,6 @@
             "serverReadyAction": {
                 "pattern": "Development Server \\(http://localhost:([0-9]+)\\) started",
                 "uriFormat": "http://localhost:%s",
-                "action": "openExternally"
-            }
-        },
-        {
-            "name": "Launch Built-in server",
-            "type": "php",
-            "request": "launch",
-            "runtimeArgs": [
-                "-S",
-                "localhost:8000",
-                "-c",
-                "-c /workspaces/app/.config/php.ini-development"
-            ],
-            "program": "",
-            "cwd": "${workspaceRoot}/www",
-            "port": 8080,
-            "serverReadyAction": {
                 "action": "openExternally"
             }
         },

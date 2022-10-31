@@ -9,6 +9,12 @@ if [ -z $CONFIG_DIRECTORY ]; then
     exit 1
 fi
 
+if [ ! -d "$CONFIG_DIRECTORY" ]; then
+    echo -e "ℹ️  Directory : $CONFIG_DIRECTORY will be created\n"
+    mkdir $CONFIG_DIRECTORY
+    NOTHING=0
+fi
+
 ## PREPARE FILE XDEBUG_INI
 
 ZEND_EXTENSION_PATH=/usr/local/lib/php/extensions/$MODULE_NAME/xdebug.so
@@ -57,6 +63,8 @@ xdebug.mode=develop,debug
 xdebug.start_with_request=yes
 xdebug.client_port=9000
 EOF
+
+    echo -e "\n; File created automatically at : $(date)" >> $FILE_XDEBUG_INI
 
 fi
 
